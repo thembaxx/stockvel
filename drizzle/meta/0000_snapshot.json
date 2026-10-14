@@ -1,0 +1,1519 @@
+{
+  "id": "c8f318f2-3b39-4bda-ad2d-334ed70088fa",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.payment_allocations": {
+      "name": "payment_allocations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "payment_id": {
+          "name": "payment_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "obligation_id": {
+          "name": "obligation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount_cents": {
+          "name": "amount_cents",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "payment_allocations_society_id_societies_id_fk": {
+          "name": "payment_allocations_society_id_societies_id_fk",
+          "tableFrom": "payment_allocations",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "payment_allocations_society_id_payment_id_payments_society_id_id_fk": {
+          "name": "payment_allocations_society_id_payment_id_payments_society_id_id_fk",
+          "tableFrom": "payment_allocations",
+          "tableTo": "payments",
+          "columnsFrom": [
+            "society_id",
+            "payment_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "payment_allocations_society_id_obligation_id_contribution_obligations_society_id_id_fk": {
+          "name": "payment_allocations_society_id_obligation_id_contribution_obligations_society_id_id_fk",
+          "tableFrom": "payment_allocations",
+          "tableTo": "contribution_obligations",
+          "columnsFrom": [
+            "society_id",
+            "obligation_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "allocation_pair": {
+          "name": "allocation_pair",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "payment_id",
+            "obligation_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "allocation_positive": {
+          "name": "allocation_positive",
+          "value": "\"payment_allocations\".\"amount_cents\">0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.approval_decisions": {
+      "name": "approval_decisions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "request_id": {
+          "name": "request_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "actor_id": {
+          "name": "actor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "decision": {
+          "name": "decision",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reason": {
+          "name": "reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "approval_decisions_society_id_societies_id_fk": {
+          "name": "approval_decisions_society_id_societies_id_fk",
+          "tableFrom": "approval_decisions",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "approval_decisions_actor_id_users_id_fk": {
+          "name": "approval_decisions_actor_id_users_id_fk",
+          "tableFrom": "approval_decisions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "actor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "approval_decisions_society_id_request_id_approval_requests_society_id_id_fk": {
+          "name": "approval_decisions_society_id_request_id_approval_requests_society_id_id_fk",
+          "tableFrom": "approval_decisions",
+          "tableTo": "approval_requests",
+          "columnsFrom": [
+            "society_id",
+            "request_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "approval_distinct_actor": {
+          "name": "approval_distinct_actor",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "request_id",
+            "actor_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "decision_value": {
+          "name": "decision_value",
+          "value": "\"approval_decisions\".\"decision\" in ('approve','decline','information')"
+        },
+        "decision_reason": {
+          "name": "decision_reason",
+          "value": "length(trim(\"approval_decisions\".\"reason\"))>=5"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.approval_requests": {
+      "name": "approval_requests",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "proposer_id": {
+          "name": "proposer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reference": {
+          "name": "reference",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "required_approvals": {
+          "name": "required_approvals",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 2
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "approval_requests_society_id_societies_id_fk": {
+          "name": "approval_requests_society_id_societies_id_fk",
+          "tableFrom": "approval_requests",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "approval_requests_proposer_id_users_id_fk": {
+          "name": "approval_requests_proposer_id_users_id_fk",
+          "tableFrom": "approval_requests",
+          "tableTo": "users",
+          "columnsFrom": [
+            "proposer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "approval_tenant_id": {
+          "name": "approval_tenant_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "approval_threshold": {
+          "name": "approval_threshold",
+          "value": "\"approval_requests\".\"required_approvals\">=2"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.audit_events": {
+      "name": "audit_events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "actor_id": {
+          "name": "actor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action": {
+          "name": "action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "entity_id": {
+          "name": "entity_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reason": {
+          "name": "reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "audit_society_time": {
+          "name": "audit_society_time",
+          "columns": [
+            {
+              "expression": "society_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "audit_events_society_id_societies_id_fk": {
+          "name": "audit_events_society_id_societies_id_fk",
+          "tableFrom": "audit_events",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "audit_events_actor_id_users_id_fk": {
+          "name": "audit_events_actor_id_users_id_fk",
+          "tableFrom": "audit_events",
+          "tableTo": "users",
+          "columnsFrom": [
+            "actor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.bank_transactions": {
+      "name": "bank_transactions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "external_id": {
+          "name": "external_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reference": {
+          "name": "reference",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount_cents": {
+          "name": "amount_cents",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "transaction_at": {
+          "name": "transaction_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "bank_transactions_society_id_societies_id_fk": {
+          "name": "bank_transactions_society_id_societies_id_fk",
+          "tableFrom": "bank_transactions",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "bank_tenant_id": {
+          "name": "bank_tenant_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "id"
+          ]
+        },
+        "bank_external_id": {
+          "name": "bank_external_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "external_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "bank_positive": {
+          "name": "bank_positive",
+          "value": "\"bank_transactions\".\"amount_cents\">0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.journal_entries": {
+      "name": "journal_entries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "actor_id": {
+          "name": "actor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "idempotency_key": {
+          "name": "idempotency_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reference": {
+          "name": "reference",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'draft'"
+        },
+        "reverses_id": {
+          "name": "reverses_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "journal_entries_society_id_societies_id_fk": {
+          "name": "journal_entries_society_id_societies_id_fk",
+          "tableFrom": "journal_entries",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "journal_entries_actor_id_users_id_fk": {
+          "name": "journal_entries_actor_id_users_id_fk",
+          "tableFrom": "journal_entries",
+          "tableTo": "users",
+          "columnsFrom": [
+            "actor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "journal_entries_society_id_reverses_id_journal_entries_society_id_id_fk": {
+          "name": "journal_entries_society_id_reverses_id_journal_entries_society_id_id_fk",
+          "tableFrom": "journal_entries",
+          "tableTo": "journal_entries",
+          "columnsFrom": [
+            "society_id",
+            "reverses_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "journal_tenant_id": {
+          "name": "journal_tenant_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "id"
+          ]
+        },
+        "journal_idempotency": {
+          "name": "journal_idempotency",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "idempotency_key"
+          ]
+        },
+        "journal_reversal": {
+          "name": "journal_reversal",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "reverses_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "journal_status": {
+          "name": "journal_status",
+          "value": "\"journal_entries\".\"status\" in ('draft','posted')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.journal_lines": {
+      "name": "journal_lines",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "entry_id": {
+          "name": "entry_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "debit_cents": {
+          "name": "debit_cents",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "0"
+        },
+        "credit_cents": {
+          "name": "credit_cents",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "0"
+        }
+      },
+      "indexes": {
+        "journal_line_entry_idx": {
+          "name": "journal_line_entry_idx",
+          "columns": [
+            {
+              "expression": "society_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "entry_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "journal_lines_society_id_societies_id_fk": {
+          "name": "journal_lines_society_id_societies_id_fk",
+          "tableFrom": "journal_lines",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "journal_lines_society_id_entry_id_journal_entries_society_id_id_fk": {
+          "name": "journal_lines_society_id_entry_id_journal_entries_society_id_id_fk",
+          "tableFrom": "journal_lines",
+          "tableTo": "journal_entries",
+          "columnsFrom": [
+            "society_id",
+            "entry_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "journal_lines_society_id_account_id_ledger_accounts_society_id_id_fk": {
+          "name": "journal_lines_society_id_account_id_ledger_accounts_society_id_id_fk",
+          "tableFrom": "journal_lines",
+          "tableTo": "ledger_accounts",
+          "columnsFrom": [
+            "society_id",
+            "account_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "line_one_side": {
+          "name": "line_one_side",
+          "value": "(\"journal_lines\".\"debit_cents\">0 and \"journal_lines\".\"credit_cents\"=0) or (\"journal_lines\".\"credit_cents\">0 and \"journal_lines\".\"debit_cents\"=0)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.ledger_accounts": {
+      "name": "ledger_accounts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ledger_accounts_society_id_societies_id_fk": {
+          "name": "ledger_accounts_society_id_societies_id_fk",
+          "tableFrom": "ledger_accounts",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "account_tenant_id": {
+          "name": "account_tenant_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "id"
+          ]
+        },
+        "account_code": {
+          "name": "account_code",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "code"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.memberships": {
+      "name": "memberships",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ended_at": {
+          "name": "ended_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "memberships_society_id_societies_id_fk": {
+          "name": "memberships_society_id_societies_id_fk",
+          "tableFrom": "memberships",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "memberships_user_id_users_id_fk": {
+          "name": "memberships_user_id_users_id_fk",
+          "tableFrom": "memberships",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "membership_tenant_id": {
+          "name": "membership_tenant_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "id"
+          ]
+        },
+        "membership_user": {
+          "name": "membership_user",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "user_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "membership_role": {
+          "name": "membership_role",
+          "value": "\"memberships\".\"role\" in ('chairperson','treasurer','secretary','approver','member')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.contribution_obligations": {
+      "name": "contribution_obligations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rule_version_id": {
+          "name": "rule_version_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount_cents": {
+          "name": "amount_cents",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "period": {
+          "name": "period",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "due_at": {
+          "name": "due_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "obligation_due_idx": {
+          "name": "obligation_due_idx",
+          "columns": [
+            {
+              "expression": "society_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "due_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "contribution_obligations_society_id_societies_id_fk": {
+          "name": "contribution_obligations_society_id_societies_id_fk",
+          "tableFrom": "contribution_obligations",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "contribution_obligations_society_id_membership_id_memberships_society_id_id_fk": {
+          "name": "contribution_obligations_society_id_membership_id_memberships_society_id_id_fk",
+          "tableFrom": "contribution_obligations",
+          "tableTo": "memberships",
+          "columnsFrom": [
+            "society_id",
+            "membership_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "contribution_obligations_society_id_rule_version_id_rule_versions_society_id_id_fk": {
+          "name": "contribution_obligations_society_id_rule_version_id_rule_versions_society_id_id_fk",
+          "tableFrom": "contribution_obligations",
+          "tableTo": "rule_versions",
+          "columnsFrom": [
+            "society_id",
+            "rule_version_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "obligation_tenant_id": {
+          "name": "obligation_tenant_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "id"
+          ]
+        },
+        "obligation_period": {
+          "name": "obligation_period",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "membership_id",
+            "period"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "obligation_positive": {
+          "name": "obligation_positive",
+          "value": "\"contribution_obligations\".\"amount_cents\">0"
+        },
+        "obligation_period_format": {
+          "name": "obligation_period_format",
+          "value": "\"contribution_obligations\".\"period\" ~ '^\\d{4}-\\d{2}$'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.payments": {
+      "name": "payments",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reported_by": {
+          "name": "reported_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount_cents": {
+          "name": "amount_cents",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "idempotency_key": {
+          "name": "idempotency_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reference": {
+          "name": "reference",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'reported'"
+        },
+        "journal_entry_id": {
+          "name": "journal_entry_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bank_transaction_id": {
+          "name": "bank_transaction_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "payments_society_id_societies_id_fk": {
+          "name": "payments_society_id_societies_id_fk",
+          "tableFrom": "payments",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "payments_reported_by_users_id_fk": {
+          "name": "payments_reported_by_users_id_fk",
+          "tableFrom": "payments",
+          "tableTo": "users",
+          "columnsFrom": [
+            "reported_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "payments_society_id_membership_id_memberships_society_id_id_fk": {
+          "name": "payments_society_id_membership_id_memberships_society_id_id_fk",
+          "tableFrom": "payments",
+          "tableTo": "memberships",
+          "columnsFrom": [
+            "society_id",
+            "membership_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "payments_society_id_journal_entry_id_journal_entries_society_id_id_fk": {
+          "name": "payments_society_id_journal_entry_id_journal_entries_society_id_id_fk",
+          "tableFrom": "payments",
+          "tableTo": "journal_entries",
+          "columnsFrom": [
+            "society_id",
+            "journal_entry_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "payments_society_id_bank_transaction_id_bank_transactions_society_id_id_fk": {
+          "name": "payments_society_id_bank_transaction_id_bank_transactions_society_id_id_fk",
+          "tableFrom": "payments",
+          "tableTo": "bank_transactions",
+          "columnsFrom": [
+            "society_id",
+            "bank_transaction_id"
+          ],
+          "columnsTo": [
+            "society_id",
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "payment_tenant_id": {
+          "name": "payment_tenant_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "id"
+          ]
+        },
+        "payment_idempotency": {
+          "name": "payment_idempotency",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "idempotency_key"
+          ]
+        },
+        "payment_bank_match": {
+          "name": "payment_bank_match",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "bank_transaction_id"
+          ]
+        },
+        "payment_journal_entry": {
+          "name": "payment_journal_entry",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "journal_entry_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "payment_positive": {
+          "name": "payment_positive",
+          "value": "\"payments\".\"amount_cents\">0"
+        },
+        "payment_status": {
+          "name": "payment_status",
+          "value": "\"payments\".\"status\" in ('reported','verified','rejected','reversed')"
+        },
+        "payment_verified_evidence": {
+          "name": "payment_verified_evidence",
+          "value": "\"payments\".\"status\" not in ('verified','reversed') or (\"payments\".\"journal_entry_id\" is not null and \"payments\".\"bank_transaction_id\" is not null)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.rule_versions": {
+      "name": "rule_versions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "society_id": {
+          "name": "society_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contribution_cents": {
+          "name": "contribution_cents",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "effective_at": {
+          "name": "effective_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "rule_versions_society_id_societies_id_fk": {
+          "name": "rule_versions_society_id_societies_id_fk",
+          "tableFrom": "rule_versions",
+          "tableTo": "societies",
+          "columnsFrom": [
+            "society_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "rule_tenant_id": {
+          "name": "rule_tenant_id",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "id"
+          ]
+        },
+        "rule_version": {
+          "name": "rule_version",
+          "nullsNotDistinct": false,
+          "columns": [
+            "society_id",
+            "version"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "rule_positive": {
+          "name": "rule_positive",
+          "value": "\"rule_versions\".\"contribution_cents\">0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.societies": {
+      "name": "societies",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timezone": {
+          "name": "timezone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Africa/Johannesburg'"
+        },
+        "currency": {
+          "name": "currency",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'ZAR'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "society_type": {
+          "name": "society_type",
+          "value": "\"societies\".\"type\" in ('rotating','burial')"
+        },
+        "society_currency": {
+          "name": "society_currency",
+          "value": "\"societies\".\"currency\"='ZAR'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
