@@ -59,8 +59,8 @@ export function PageEnter({ children, id }: { children: ReactNode; id: string })
     <m.div
       key={id}
       className="workspace-view"
-      initial={reduced ? false : { opacity: 0, y: 7 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={reduced ? false : { y: 7 }}
+      animate={{ y: 0 }}
       transition={{ duration: reduced ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
