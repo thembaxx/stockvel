@@ -2198,6 +2198,7 @@ td b {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   padding: 20px 23px;
   border-bottom: 1px solid var(--line);
   position: sticky;
@@ -2206,12 +2207,28 @@ td b {
   z-index: 1;
 }
 .dialog-heading h2 {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 20px;
   letter-spacing: -0.6px;
   font-weight: 500;
 }
 .dialog-body {
+  min-width: 0;
+  overflow-wrap: anywhere;
   padding: 24px;
+}
+.dialog-body .button {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+}
+.dialog-body .button > svg {
+  flex-shrink: 0;
+}
+.dialog-body .status {
+  max-width: 100%;
+  white-space: normal;
 }
 .dialog-body > p {
   font-size: 12px;
@@ -2222,12 +2239,15 @@ td b {
 }
 .form-stack {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   gap: 20px;
   margin-top: 22px;
 }
 .form-stack label,
 .mobile-more label {
   display: grid;
+  min-width: 0;
   gap: 8px;
   font-size: 11px;
   font-weight: 500;
@@ -2243,7 +2263,17 @@ td b {
   padding: 12px;
   font-size: 12px;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: 46px;
+}
+.form-stack input[type="date"] {
+  display: block;
+  min-inline-size: 0;
+}
+.form-stack input[type="date"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
 }
 .form-stack input:read-only {
   background: #e9ecf2;
@@ -2258,7 +2288,8 @@ td b {
 }
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-width: 0;
   gap: 15px;
 }
 .form-help {
@@ -2278,6 +2309,7 @@ td b {
 }
 .dialog-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
@@ -2298,11 +2330,17 @@ td b {
 }
 .payment-detail-top {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
 }
 .payment-detail-top > div {
   flex: 1;
+  min-width: 0;
+}
+.payment-detail-top .avatar,
+.evidence > svg {
+  flex-shrink: 0;
 }
 .payment-detail-top h3 {
   font-size: 14px;
@@ -2320,7 +2358,7 @@ td b {
 }
 .detail-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   background: #e9ecf3;
   border-radius: 12px;
@@ -2329,6 +2367,7 @@ td b {
 }
 .detail-grid > div {
   display: grid;
+  min-width: 0;
   gap: 6px;
 }
 .detail-grid small {
@@ -2356,8 +2395,13 @@ td b {
   color: var(--muted);
   margin-top: 3px;
 }
+.evidence > div {
+  min-width: 0;
+}
 .statement-row {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: space-between;
   align-items: center;
   border: 1px solid var(--line);
@@ -2367,6 +2411,7 @@ td b {
 }
 .statement-row > div {
   display: grid;
+  min-width: 0;
   gap: 5px;
 }
 .statement-row small {
@@ -3733,6 +3778,18 @@ td b {
   }
   .policy-page p {
     font-size: 12px;
+  }
+}
+@media (max-width: 480px) {
+  .dialog .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dialog-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dialog-actions .button {
+    width: 100%;
   }
 }
 @media (max-width: 380px) {
