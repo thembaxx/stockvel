@@ -94,4 +94,16 @@ See [docs/production-readiness.md](docs/production-readiness.md). This milestone
 
 ## Design and assets
 
+Brand principles and preliminary naming research are in [docs/brand-direction.md](docs/brand-direction.md). StokvelOS remains the working name until a replacement identity is chosen.
+
 Visual references inform generous spacing, calm gradients, prominent amounts and restrained cards. Inter and Instrument Serif are served locally, with system fallbacks. The lifestyle image is generated editorial artwork: a woman using her phone in a South African city, with a blue cardigan, soft daylight and a cool palette. It is illustrative, not a testimonial or pilot customer. No analytics or third-party fonts are loaded.
+
+## SEO and public AI-readable content
+
+The landing page and prototype privacy page have distinct canonicals, titles, descriptions, Open Graph and Twitter metadata. The 1200×630 social card uses the current working identity. Public JSON-LD describes a prototype, with no fabricated ratings, testimonials, subscriptions or insurance offers.
+
+`src/lib/site.ts` holds public metadata and the canonical origin. The default is the existing repository homepage, `https://stockvel-seven.vercel.app`. Set the server-side `SITE_URL` to an absolute HTTPS origin when connecting a custom domain and rebuild. It cannot contain credentials, a subpath, query or fragment. Vercel preview/development deployments emit noindex headers/metadata and an empty sitemap.
+
+`/robots.txt` and `/sitemap.xml` include only public pages. Demo routes also emit `X-Robots-Tag: noindex, nofollow`; crawl rules are not access controls. Production authentication is still required for private records.
+
+`/llms.txt` follows the [llms.txt proposal](https://llmstxt.org/) and points to public Markdown at `/about.md` and `/privacy.md`, plus source documentation. `/llm.txt` permanently redirects to the standard plural filename. These files describe the current prototype and its limits, disclose hypothetical pricing, and contain no private records. They aid discovery; they do not guarantee search rankings or inclusion in model answers.

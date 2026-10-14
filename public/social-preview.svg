@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop stop-color="#C4E7FB"/>
+      <stop offset="1" stop-color="#F7F9FC"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1200v630H0z"/>
+  <circle cx="1060" cy="355" r="320" fill="#fff" opacity=".22"/>
+  <circle cx="1060" cy="355" r="235" fill="none" stroke="#8BB6DA" opacity=".3"/>
+  <circle cx="1060" cy="355" r="145" fill="none" stroke="#8BB6DA" opacity=".3"/>
+  <circle cx="89" cy="86" r="25" fill="#293B70"/>
+  <path d="M99 77c-3-3.3-16.2-4-19 1.8-3.7 8 18.3 4.3 17.8 12.5-.3 6.2-14.3 8-20.5 2.7" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <text x="129" y="97" font-family="Arial, sans-serif" font-size="38" letter-spacing="-2" fill="#263451">stokvelos.</text>
+  <text x="64" y="199" font-family="Arial, sans-serif" font-size="17" letter-spacing="3" fill="#3B527F">COMMUNITY MONEY, MADE CLEAR</text>
+  <text x="60" y="304" font-family="Arial, sans-serif" font-size="86" letter-spacing="-4" fill="#263451">Good things</text>
+  <text x="60" y="402" font-family="Arial, sans-serif" font-size="86" letter-spacing="-4" fill="#263451">grow</text>
+  <text x="269" y="402" font-family="Georgia, serif" font-size="99" font-style="italic" letter-spacing="-5" fill="#293B70">together.</text>
+  <path d="M64 450h660" stroke="#8FAAC9" stroke-width="1"/>
+  <text x="64" y="503" font-family="Arial, sans-serif" font-size="24" fill="#43587D">Stokvel and burial society administration.</text>
+  <text x="64" y="542" font-family="Arial, sans-serif" font-size="24" fill="#43587D">Your people. Your contributions. One clear picture.</text>
+  <rect x="930" y="529" width="206" height="43" rx="22" fill="#293B70"/>
+  <text x="1033" y="557" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#fff">Explore the prototype</text>
+</svg>

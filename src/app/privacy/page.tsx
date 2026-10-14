@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import { Brand } from "@/components/brand";
-export const metadata = { title: "Prototype privacy" };
+import { publicPageMetadata } from "@/lib/site";
+export const metadata = publicPageMetadata("/privacy");
 export default function Privacy() {
   return (
     <main className="policy-page" id="main-content">

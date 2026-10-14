@@ -16,6 +16,9 @@ import {
 import { Brand } from "@/components/brand";
 import { PhonePreview } from "@/components/phone-preview";
 import { Intro, HeroPhone, SectionReveal } from "@/components/motion";
+import { jsonLd, publicPageMetadata, publicStructuredData } from "@/lib/site";
+
+export const metadata = publicPageMetadata("/");
 
 const features = [
   {
@@ -47,6 +50,10 @@ const features = [
 export default function Home() {
   return (
     <main className="marketing" id="main-content">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(publicStructuredData()) }}
+      />
       <section className="hero" id="top">
         <nav className="marketing-nav">
           <Brand />

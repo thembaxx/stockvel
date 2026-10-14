@@ -7,15 +7,17 @@ import "@fontsource/instrument-serif/400-italic.css";
 import "./globals.css";
 import { PwaSupport } from "@/components/pwa-support";
 import { MotionProvider } from "@/components/motion";
+import { isIndexable, resolveSiteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { default: "StokvelOS — Good things grow together", template: "%s · StokvelOS" },
-  description:
-    "A clearer way to manage South African rotating stokvels and burial societies. Contributions, committee decisions and transparent records in one place.",
-  applicationName: "StokvelOS",
+  metadataBase: new URL(resolveSiteUrl()),
+  title: { default: site.title, template: `%s · ${site.name}` },
+  description: site.description,
+  applicationName: site.name,
+  robots: { index: isIndexable(), follow: true },
   manifest: "/manifest.webmanifest",
   icons: { icon: "/icon.svg", apple: "/icons/apple-touch-icon.png" },
-  appleWebApp: { capable: true, statusBarStyle: "default", title: "StokvelOS" },
+  appleWebApp: { capable: true, statusBarStyle: "default", title: site.name },
   formatDetection: { telephone: false },
 };
 export const viewport: Viewport = {
