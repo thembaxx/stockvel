@@ -10,7 +10,9 @@ export function parseRand(value: string): bigint {
 export function formatZar(cents: bigint, decimals = true): string {
   const negative = cents < 0n;
   const absolute = negative ? -cents : cents;
-  const rands = new Intl.NumberFormat("en-ZA").format(absolute / 100n).replace(/\u00a0/g, " ");
+  // Explicit grouping avoids CLDR/ICU differences between Safari and other engines,
+  // including whether four-digit values receive a grouping separator.
+  const rands = (absolute / 100n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   return `${negative ? "−" : ""}R ${rands}${decimals ? `.${(absolute % 100n).toString().padStart(2, "0")}` : ""}`;
 }
 

@@ -117,7 +117,7 @@ export default function Home() {
                 <ArrowUpRightIcon size={16} />
               </div>
               <strong>
-                R 4,300<span>.00</span>
+                R 4 300<span>.00</span>
               </strong>
               <div className="mini-chart">
                 {[35, 52, 43, 70, 60, 90, 77].map((h, i) => (
@@ -197,7 +197,7 @@ export default function Home() {
                   ) : visual === "approval" ? (
                     <>
                       <span className="eyebrow">NEXT PAYOUT · 25 OCT</span>
-                      <div className="visual-amount">R 6,000.00</div>
+                      <div className="visual-amount">R 6 000.00</div>
                       <div className="approval-line">
                         <span className="avatar sage">SD</span>
                         <span>Committee review</span>
@@ -214,7 +214,7 @@ export default function Home() {
                           <UsersThreeIcon size={12} /> Ubuntu Savings Circle
                         </span>
                         <br />
-                        October contributions: R 4,300 verified.
+                        October contributions: R 4 300 verified.
                         <br />
                         Next payout: scheduled for 25 October.
                       </p>

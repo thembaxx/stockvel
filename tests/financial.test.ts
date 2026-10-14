@@ -34,6 +34,9 @@ const secretary: Actor = {
   societyId: "ubuntu",
 };
 describe("integer-cent money", () => {
+  it("groups four-digit rand amounts consistently across browser locales", () => {
+    expect(formatZar(480000n)).toBe("R 4 800.00");
+  });
   it("parses rand without floating point", () => {
     expect(parseRand("0.29")).toBe(29n);
     expect(parseRand("500.1")).toBe(50010n);

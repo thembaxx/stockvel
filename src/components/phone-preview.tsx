@@ -34,7 +34,7 @@ export function PhonePreview() {
         <div className="phone-balance">
           <span className="eyebrow">Ubuntu Savings Circle</span>
           <div className="phone-amount">
-            R 4,300<span>.00</span>
+            R 4 300<span>.00</span>
           </div>
           <small>
             <span className="tiny-dot" /> Verified contributions this month
@@ -67,7 +67,7 @@ export function PhonePreview() {
             <ArrowUpRightIcon size={17} />
           </div>
           <strong>
-            R 6,000<span>.00</span>
+            R 6 000<span>.00</span>
           </strong>
           <div className="flex-between">
             <div>

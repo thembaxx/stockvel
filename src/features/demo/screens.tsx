@@ -570,7 +570,7 @@ export function Payouts() {
             </div>
           </div>
           <div className="info-note">
-            <InfoIcon size={20} /> Available funds include R 6,200.00 of reconciled prior-cycle
+            <InfoIcon size={20} /> Available funds include R 6 200.00 of reconciled prior-cycle
             carryover. The scheduled amount and current-cycle collection are different measures.
           </div>
           <div className="approval-progress">
@@ -1004,7 +1004,7 @@ export function Reports() {
         <div className="report-disclosures">
           <h3>What these figures include</h3>
           <p>
-            Verified funds include R 6,200.00 of reconciled prior-cycle carryover and posted October
+            Verified funds include R 6 200.00 of reconciled prior-cycle carryover and posted October
             events. {formatZar(sums.pending)} in reported payments remains outside the journal. The
             current obligation shortfall is {formatZar(sums.due)}.
           </p>
