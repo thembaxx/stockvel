@@ -3,6 +3,7 @@ import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 import { readFile } from "node:fs/promises";
 import { verifyReportedPayment } from "../src/server/accounting/verify-payment";
+import { withSocietyAccess } from "../src/server/auth/tenant-context";
 import type { Database } from "../src/server/db/client";
 import * as schema from "../src/server/db/schema";
 const uid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
@@ -66,6 +67,23 @@ describe("PostgreSQL constraints and transactional payment service", () => {
       { societyId: tenant, paymentId: uid(60), bankTransactionId: uid(50), obligationId: uid(30) },
     );
   };
+  it("rejects ended memberships in the tenant-scoped service helper", async () => {
+    await query(`UPDATE memberships SET ended_at=now() WHERE society_id='${tenant}' AND user_id='${treasurer}'`);
+    await query("SET ROLE stokvel_app");
+    const now = Date.now();
+    await expect(withSocietyAccess(
+      db,
+      {
+        userId: treasurer,
+        authenticatedAt: new Date(now - 60_000),
+        expiresAt: new Date(now + 3_600_000),
+        mfaVerifiedAt: null,
+      },
+      tenant,
+      ["treasurer"],
+      async () => "access granted",
+    )).rejects.toThrow("FORBIDDEN");
+  });
   it("service allocates R300 against R500 and replays without a second posting", async () => {
     const first = await verify();
     const second = await verify();
