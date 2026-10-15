@@ -11,6 +11,7 @@ import { Dialog } from "@/components/dialog";
 import { useDemo } from "./context";
 import { reportPayment, summary } from "./model";
 import { parseRand, formatZar, centsToDecimal } from "@/lib/money";
+import { csvCell } from "@/lib/csv-export";
 
 export function RecordPaymentDialog({ onClose }: { onClose: () => void }) {
   const { state, actor, update, notify } = useDemo();
@@ -170,10 +171,6 @@ export function ShareDialog({ onClose }: { onClose: () => void }) {
   );
 }
 
-/** Quote CSV cells and neutralise formulas before exporting user-controlled text. */
-export function csvCell(value: string): string {
-  return `"${(/^[=+\-@\t\r]/.test(value) ? "'" : "") + value.replaceAll('"', '""')}"`;
-}
 export function downloadReport(state: ReturnType<typeof useDemo>["state"]) {
   const sums = summary(state);
   const rows = [
