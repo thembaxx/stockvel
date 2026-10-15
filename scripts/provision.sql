@@ -14,3 +14,6 @@ GRANT UPDATE(status, journal_entry_id, bank_transaction_id) ON payments TO stokv
 -- SELECT FOR UPDATE requires UPDATE permission. Immutable triggers still reject
 -- actual edits; these narrow column grants enable transactional row locks only.
 GRANT UPDATE(id) ON contribution_obligations, bank_transactions, approval_requests TO stokvel_app;
+
+-- No grants are issued for society_invitations, burial_claims, society_documents,
+-- billing_subscriptions or billing_webhook_events. Their RLS is default-deny.
