@@ -9,6 +9,11 @@ concurrency:
   cancel-in-progress: true
 jobs:
   verify:
+    # Public CI uses a non-functional auth origin and an explicitly test-only
+    # signing secret. Production secrets are stored only in Vercel.
+    env:
+      NEON_AUTH_BASE_URL: https://auth.example.invalid
+      NEON_AUTH_COOKIE_SECRET: ci-test-only-not-a-production-cookie-signing-secret-123456789
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:

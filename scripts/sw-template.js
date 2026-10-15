@@ -14,7 +14,7 @@ self.addEventListener("message", event => { if(event.data?.type==="SKIP_WAITING"
 self.addEventListener("fetch", event => {
   const request=event.request;const url=new URL(request.url);
   if(request.method!=="GET"||url.origin!==self.location.origin||request.headers.get("RSC")||request.headers.get("Next-Router-Prefetch"))return;
-  if(url.pathname.startsWith("/api/")||url.pathname.startsWith("/auth/")||url.pathname.startsWith("/societies/")||url.pathname.startsWith("/documents/"))return;
+  if(url.pathname.startsWith("/api/")||url.pathname.startsWith("/auth/")||url.pathname.startsWith("/workspace/")||url.pathname==="/workspace"||url.pathname.startsWith("/account/")||url.pathname.startsWith("/organization/")||url.pathname.startsWith("/societies/")||url.pathname.startsWith("/documents/"))return;
   if(request.mode==="navigate"){
     // Even previously viewed dashboard HTML is not stored. Only a non-sensitive shell is available offline.
     event.respondWith(fetch(request).catch(async()=>{const cache=await caches.open(CACHE);return await cache.match("/offline.html")||Response.error();}));return;
