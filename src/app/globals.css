@@ -2188,7 +2188,9 @@ td b {
   max-height: 90dvh;
   box-shadow: 0 25px 100px #102a3540;
   margin: auto;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .dialog::backdrop {
   background: #151d2f80;
@@ -2215,6 +2217,7 @@ td b {
 }
 .dialog-body {
   min-width: 0;
+  max-width: 100%;
   overflow-wrap: anywhere;
   padding: 24px;
 }
@@ -2257,6 +2260,7 @@ td b {
 .form-stack select,
 .form-stack textarea,
 .mobile-more select {
+  box-sizing: border-box;
   border: 1px solid #d0d5e0;
   background: #fff;
   border-radius: 8px;
@@ -2265,15 +2269,9 @@ td b {
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  min-height: 46px;
-}
-.form-stack input[type="date"] {
-  display: block;
   min-inline-size: 0;
-}
-.form-stack input[type="date"]::-webkit-date-and-time-value {
-  min-width: 0;
-  text-align: left;
+  max-inline-size: 100%;
+  min-height: 46px;
 }
 .form-stack input:read-only {
   background: #e9ecf2;

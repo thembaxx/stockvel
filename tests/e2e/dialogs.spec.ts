@@ -9,8 +9,20 @@ async function expectDialogFits(page: Page) {
     const style = getComputedStyle(body);
     const left = rect.left + parseFloat(style.paddingLeft);
     const right = rect.right - parseFloat(style.paddingRight);
+    const previousLeft = element.scrollLeft;
+    element.scrollLeft = 10000;
+    const horizontalTravel = element.scrollLeft;
+    element.scrollLeft = previousLeft;
     return {
       overflow: element.scrollWidth - element.clientWidth,
+      horizontalTravel,
+      innerOverflow: [
+        ...body.querySelectorAll(
+          ".form-stack, .form-grid, label, .dialog-actions, .share-preview, .invite-preview",
+        ),
+      ]
+        .filter((child) => child.scrollWidth > child.clientWidth + 1)
+        .map((child) => child.className || child.tagName),
       offscreen:
         element.getBoundingClientRect().right > innerWidth ||
         element.getBoundingClientRect().left < 0,
@@ -32,6 +44,11 @@ async function expectDialogFits(page: Page) {
     };
   });
   expect(bounds.overflow, "Popup must not have a horizontal scroll area").toBeLessThanOrEqual(1);
+  expect(bounds.horizontalTravel, "Popup must not move horizontally").toBe(0);
+  expect(
+    bounds.innerOverflow,
+    "Nested form containers must not overflow behind clipped popup edges",
+  ).toEqual([]);
   expect(bounds.offscreen, "Popup must stay within the viewport").toBe(false);
   expect(bounds.escaped, "Controls must fit inside the popup's padded content area").toEqual([]);
   const lastAction = dialog.locator(".dialog-body button, .dialog-body a.button").last();
@@ -91,7 +108,8 @@ for (const width of [320, 390, 768]) {
           const reference = `DIALOG-REPORT-${width}`;
           await page.getByLabel("Amount (ZAR)").fill("300.00");
           await page.getByLabel("Payment reference").fill(reference);
-          await expect(page.getByLabel("Payment date")).toHaveValue("2026-10-14");
+          await expect(page.getByLabel("Payment date")).toHaveValue("14 Oct 2026");
+          await expect(page.getByLabel("Payment date")).toHaveAttribute("readonly");
           await page.getByRole("button", { name: "Record reported payment", exact: true }).click();
           await expect(page.getByRole("dialog")).not.toBeVisible();
           await page

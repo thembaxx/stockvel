@@ -68,7 +68,8 @@ export function RecordPaymentDialog({ onClose }: { onClose: () => void }) {
           </label>
           <label>
             Payment date
-            <input type="date" defaultValue="2026-10-14" readOnly aria-describedby="date-note" />
+            {/* This fixed date is display-only. iOS date inputs can exceed their CSS width. */}
+            <input type="text" value="14 Oct 2026" readOnly aria-describedby="date-note" />
           </label>
         </div>
         <small id="date-note" className="muted">
