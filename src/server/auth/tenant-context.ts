@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 import type { Database } from "@/server/db/client";
 import { memberships } from "@/server/db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import {
   validateVerifiedIdentity,
   type VerifiedIdentity,
@@ -38,6 +38,7 @@ export async function withSocietyAccess<T>(
       .where(and(
         eq(memberships.societyId, societyId),
         eq(memberships.userId, session.userId),
+        isNull(memberships.endedAt),
       ));
     if (!membership || !allowedRoles.includes(membership.role as SocietyRole)) {
       throw new Error("FORBIDDEN");
