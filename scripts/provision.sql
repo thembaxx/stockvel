@@ -16,5 +16,9 @@ GRANT UPDATE(status, journal_entry_id, bank_transaction_id) ON payments TO stokv
 GRANT UPDATE(id) ON contribution_obligations, bank_transactions, approval_requests TO stokvel_app;
 
 -- Keep unreleased domain data unavailable to the runtime database role.
-REVOKE ALL ON society_invitations, burial_claims, society_documents,
-  billing_subscriptions, billing_webhook_events FROM stokvel_app;
+DO $ BEGIN
+  IF to_regclass('public.society_invitations') IS NOT NULL THEN
+    REVOKE ALL ON society_invitations, burial_claims, society_documents,
+      billing_subscriptions, billing_webhook_events FROM stokvel_app;
+  END IF;
+END $;
