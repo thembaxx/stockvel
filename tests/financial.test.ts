@@ -15,6 +15,7 @@ import {
 } from "../src/features/demo/model";
 import { formatZar, parseRand } from "../src/lib/money";
 import { parseBankCsv } from "../src/lib/bank-csv";
+import { csvCell } from "../src/lib/csv-export";
 const treasurer: Actor = {
   id: "naledi",
   name: "Naledi Molefe",
@@ -222,5 +223,27 @@ describe("bank CSV import", () => {
   it("invalid dates and negative incoming amounts fail", () => {
     expect(() => parseBankCsv("id,date,reference,amount\nb1,2026-02-30,R1,500")).toThrow("valid");
     expect(() => parseBankCsv("id,date,reference,amount\nb1,2026-10-01,R1,-500")).toThrow();
+  });
+});
+
+describe("spreadsheet-safe CSV export", () => {
+  it.each([
+    "=1+1",
+    "  =HYPERLINK(\"https://example.com\")",
+    "\\t+SUM(1,2)",
+    "\\r@danger",
+    "\\u200B=1+1",
+    "\\uFEFF-1+2",
+  ])("neutralises formula-like user text %s", (input) => {
+    const value = input
+      .replaceAll("\\t", "\t")
+      .replaceAll("\\r", "\r")
+      .replaceAll("\\u200B", "\u200B")
+      .replaceAll("\\uFEFF", "\uFEFF");
+    expect(csvCell(value)).toBe('"' + ("'" + value).replaceAll('"', '""') + '"');
+  });
+  it("quotes ordinary CSV cells without changing their content", () => {
+    expect(csvCell('Member "One", October')).toBe('"Member ""One"", October"');
+    expect(csvCell("R 500.00")).toBe('"R 500.00"');
   });
 });
