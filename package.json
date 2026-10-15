@@ -33,7 +33,7 @@
     "@electric-sql/pglite": "^0.5.9",
     "@playwright/test": "^1.64.0",
     "@tailwindcss/postcss": "^4.1.0",
-    "@types/node": "^22.0.0",
+    "@types/node": "^26.6.5",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "drizzle-kit": "^0.31.11",
