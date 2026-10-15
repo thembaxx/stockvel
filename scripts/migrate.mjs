@@ -13,6 +13,8 @@ try {
   await tx`SELECT pg_advisory_xact_lock(73109211)`;
   const existing=await tx`SELECT name FROM public.stokvel_guard_migrations WHERE name='0001_financial_guards'`;
   if(!existing.length){await tx.unsafe(await readFile('drizzle/0001_financial_guards.sql','utf8'));await tx`INSERT INTO public.stokvel_guard_migrations(name) VALUES ('0001_financial_guards')`;}
+  const domain=await tx`SELECT name FROM public.stokvel_guard_migrations WHERE name='0002_domain_storage'`;
+  if(!domain.length){await tx.unsafe(await readFile('drizzle/0002_domain_storage.sql','utf8'));await tx`INSERT INTO public.stokvel_guard_migrations(name) VALUES ('0002_domain_storage')`;}
  });
  console.log('Schema and financial guards migrated. Apply reviewed runtime grants separately.');
 }finally{await client.end();}
