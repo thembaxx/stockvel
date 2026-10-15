@@ -1,6 +1,8 @@
 # Production authentication integration boundary
 
-This milestone introduces a fail-closed session validation contract and a tenant-scoped transaction helper. **It does not implement login, registration, invitations, or production user sessions.** The public demo remains fictional and unauthenticated. No financial API is exposed.
+The app now integrates **Neon Auth** for sign-in, sign-up, account recovery and an authenticated \`/workspace\` shell. Its auth API is served at \`/api/auth/[...path]\`. Session verification uses the official Neon server adapter, and authenticated \`/api/account\` returns only the signed-in account's display name and email. The public demo remains fictional and unauthenticated.
+
+**This does not enable live society records or financial APIs.** The \`VerifiedIdentity\` type and tenant-access helper are still a separate boundary: don't derive an internal financial actor from email, or accept an arbitrary UUID from the client. Production society persistence and authorization are not yet connected.
 
 ## Provider integration requirements
 
@@ -18,3 +20,11 @@ This milestone introduces a fail-closed session validation contract and a tenant
 - The schema's `memberships` table currently has one row per user/society; committee appointment history and invitations need separate schema migrations.
 - No private data, banking credentials or real member information should be entered into the public prototype.
 - This is a preparatory security slice, not a production-ready release.
+
+## Current Vercel integration
+
+- \`NEON_AUTH_BASE_URL\` is provided by the Vercel Neon integration.
+- \`NEON_AUTH_COOKIE_SECRET\` must be generated separately for production and preview, stored as sensitive, and rotated safely.
+- CI uses a fake auth origin and a **public test-only secret** strictly for build-time SDK configuration. It does not permit real sign-in.
+- All authenticated routes must return \`Cache-Control: private, no-store\`; the PWA must bypass \`/auth\`, \`/workspace\` and API requests.
+- \`GET /api/health\` tests database **reachability** only, not grants, migrations or onboarding readiness.
