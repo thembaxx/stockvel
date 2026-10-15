@@ -62,8 +62,8 @@ export default function Home() {
             <a href="#societies">Your society</a>
             <a href="#pricing">Pricing</a>
           </div>
-          <Link className="button button-light" href="/demo">
-            Explore the demo <ArrowUpRightIcon size={17} />
+          <Link className="button button-light" href="/auth/sign-in">
+            Sign in <ArrowUpRightIcon size={17} />
           </Link>
         </nav>
         <div className="hero-grid">
