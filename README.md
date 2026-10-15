@@ -2,7 +2,7 @@
 
 A mobile-first administration platform for South African rotating stokvels and burial societies. This repository delivers the blueprint’s **first milestone: a clickable prototype, financial test cases and a PostgreSQL financial foundation**.
 
-**Status:** reviewable prototype and tested foundation. The public app uses fictional records in browser memory. Real authentication, live society persistence and production onboarding are not enabled. No money is held or transferred.
+**Status:** reviewable prototype, tested financial foundation, and initial Neon Auth integration. The \`/auth/sign-in\` and \`/workspace\` routes use server-verified Neon sessions; the public \`/demo\` app still uses fictional records in browser memory. Live society persistence, invitations, production onboarding and financial APIs are not enabled. No money is held or transferred.
 
 ## Run locally
 
@@ -58,7 +58,7 @@ Push notifications, automated messages and complex offline financial editing are
 
 `src/server/accounting/verify-payment.ts` is a transaction-scoped, validated internal service. It verifies active committee membership, locks receipt/bank/obligation records, posts a balanced journal, allocates funds and writes the audit event atomically. Retries return the existing posting; conflicting evidence fails. `AuthenticatedActor.userId` must be supplied from a verified server session, never from client input.
 
-No production auth provider or financial API is exposed. Do not attach this service to an endpoint without session authentication, MFA/reauthentication policy, request limits, CSRF/origin protection and integration tests for the deployed environment.
+Neon Auth is now used for login, but the financial service is still **not exposed** via any public API. Do not attach this service to an endpoint without verified Neon-to-internal identity mapping, committee MFA/reauthentication, request limits, CSRF/origin protection, least-privileged DB roles and integration tests for the deployed environment.
 
 ### Database setup
 
@@ -107,3 +107,9 @@ The landing page and prototype privacy page have distinct canonicals, titles, de
 `/robots.txt` and `/sitemap.xml` include only public pages. Demo routes also emit `X-Robots-Tag: noindex, nofollow`; crawl rules are not access controls. Production authentication is still required for private records.
 
 `/llms.txt` follows the [llms.txt proposal](https://llmstxt.org/) and points to public Markdown at `/about.md` and `/privacy.md`, plus source documentation. `/llm.txt` permanently redirects to the standard plural filename. These files describe the current prototype and its limits, disclose hypothetical pricing, and contain no private records. They aid discovery; they do not guarantee search rankings or inclusion in model answers.
+
+## Sign-in and private account shell
+
+Neon Auth SDKs serve \`/auth/sign-in\`, \`/auth/sign-up\`, recovery flows, \`/api/auth/[...path]\`, and an authenticated \`/workspace\`. The account endpoint \`/api/account\` returns HTTP 401 without an authenticated session. The workspace is an account shell only: financial pages remain in the explicitly fictional \`/demo\`.
+
+Set \`NEON_AUTH_BASE_URL\` and a distinct 32+ character \`NEON_AUTH_COOKIE_SECRET\` for every environment. Vercel production and preview secrets must not be copied into source control. Local builds require non-production values even if not exercising login; GitHub CI supplies **test-only** configuration. See [authentication boundary](docs/authentication-boundary.md).
