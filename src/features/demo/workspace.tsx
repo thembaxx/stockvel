@@ -16,7 +16,6 @@ import {
   GearSixIcon,
   ArrowUpRightIcon,
   CaretDownIcon,
-  PlusIcon,
   BellIcon,
   MagnifyingGlassIcon,
   XIcon,
@@ -64,6 +63,15 @@ export function Workspace({ view }: { view: View }) {
   const [more, setMore] = useState(false);
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  useEffect(() => {
+    const mobile = window.matchMedia("(max-width: 760px)");
+    const closeNavigationOverlays = () => {
+      setMore(false);
+      setShowSearch(false);
+    };
+    mobile.addEventListener("change", closeNavigationOverlays);
+    return () => mobile.removeEventListener("change", closeNavigationOverlays);
+  }, []);
   useEffect(() => {
     if (view === "benefits") switchSociety("burial");
     else if (view === "payouts") switchSociety("rotating");
@@ -205,6 +213,8 @@ export function Workspace({ view }: { view: View }) {
             <button
               className="icon-button"
               aria-label="Search members"
+              aria-expanded={showSearch}
+              aria-controls="member-search"
               onClick={() => setShowSearch(!showSearch)}
             >
               <MagnifyingGlassIcon size={21} />
@@ -254,11 +264,17 @@ export function Workspace({ view }: { view: View }) {
           </Link>
         </div>
         {showSearch && (
-          <div className="global-search">
+          <div
+            className="global-search"
+            id="member-search"
+            role="search"
+            aria-label="Society members"
+          >
             <label>
               <MagnifyingGlassIcon size={19} />
               <input
                 autoFocus
+                aria-label="Find a member"
                 placeholder="Find a member…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -311,7 +327,11 @@ export function Workspace({ view }: { view: View }) {
             <span>{l}</span>
           </Link>
         ))}
-        <button onClick={() => setMore(!more)} aria-expanded={more}>
+        <button
+          onClick={() => setMore(!more)}
+          aria-expanded={more}
+          aria-controls="mobile-more-menu"
+        >
           <DotsThreeOutlineIcon size={22} />
           <span>More</span>
         </button>
@@ -320,6 +340,9 @@ export function Workspace({ view }: { view: View }) {
         {more && (
           <m.div
             className="mobile-more"
+            id="mobile-more-menu"
+            role="region"
+            aria-label="More from your society"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}

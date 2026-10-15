@@ -22,6 +22,11 @@ html {
   background: var(--paper);
   min-height: 100%;
   overscroll-behavior-y: none;
+  scrollbar-gutter: stable;
+}
+html:has(dialog[open]),
+html:has(dialog[open]) body {
+  overflow: hidden;
 }
 body {
   margin: 0;
@@ -3567,8 +3572,12 @@ td b {
     display: block;
     position: fixed;
     bottom: calc(83px + env(safe-area-inset-bottom));
-    right: 15px;
-    left: 15px;
+    right: max(15px, env(safe-area-inset-right));
+    left: max(15px, env(safe-area-inset-left));
+    max-height: calc(100dvh - 95px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     z-index: 51;
     background: #fff;
     border: 1px solid var(--line);
@@ -3577,6 +3586,10 @@ td b {
     padding: 20px;
   }
   .mobile-more > .flex-between {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: inherit;
     margin-bottom: 17px;
   }
   .mobile-more b {
