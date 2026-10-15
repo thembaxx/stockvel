@@ -181,6 +181,7 @@ export function Workspace({ view }: { view: View }) {
           <Link
             href="/demo/settings"
             className={`sidebar-link ${view === "settings" ? "current" : ""}`}
+            aria-current={view === "settings" ? "page" : undefined}
           >
             <GearSixIcon size={21} /> Society settings
           </Link>

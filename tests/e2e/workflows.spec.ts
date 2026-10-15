@@ -63,7 +63,7 @@ test("monthly report downloads a balanced CSV", async ({ page }) => {
   await page.getByRole("button", { name: "Download CSV" }).click();
   expect((await downloaded).suggestedFilename()).toBe("stokvelos-ubuntu-2026-10-demo.csv");
 });
-for (const width of [360, 768, 1440])
+for (const width of [320, 360, 768, 1024, 1440])
   test(`responsive workspace at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/demo");
@@ -72,6 +72,12 @@ for (const width of [360, 768, 1440])
       true,
     );
     await expect(page.getByText("R 10 500.00", { exact: false })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Review next payout", exact: true })).toBeVisible();
+    const recent = page.locator(".recent-contributions .table-wrap");
+    expect(await recent.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(
+      true,
+    );
+    await expect(recent.getByText("Reported", { exact: true }).first()).toBeVisible();
     if (width === 360)
       await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeVisible();
   });

@@ -1,0 +1,572 @@
+/* Shared interface scale. Keep financial records readable at every viewport. */
+.workspace {
+  --chart-verified: #293b70;
+  --chart-due: #e8eef7;
+}
+.workspace .workspace-main {
+  padding: 36px clamp(24px, 2.5vw, 44px);
+  max-width: 1520px;
+}
+.workspace .page-heading {
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px 28px;
+  margin-bottom: 30px;
+}
+.workspace .page-heading > div:first-child {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+.workspace .page-heading .eyebrow {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+}
+.workspace .page-heading h1 {
+  max-width: 720px;
+  font-size: clamp(28px, 2.3vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+  text-wrap: balance;
+  margin-top: 12px;
+}
+.workspace .page-heading p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.workspace .page-heading-actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.workspace .page-heading-actions .button {
+  font-size: 13px;
+}
+.workspace .period-pill {
+  display: inline-flex;
+  font-size: 12px;
+  min-height: 44px;
+}
+.workspace .breadcrumb {
+  font-size: 12px;
+}
+.workspace .actor-select > span {
+  font-size: 10px;
+}
+.workspace .actor-select select {
+  font-size: 12px;
+  min-height: 28px;
+}
+.workspace .demo-banner,
+.workspace .demo-banner a {
+  font-size: 11px;
+}
+.workspace .demo-banner {
+  min-height: 38px;
+}
+.workspace .sidebar-link {
+  font-size: 13px;
+  min-height: 44px;
+}
+.workspace .dashboard-stats {
+  grid-template-columns: 1.25fr repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.workspace .stat-card {
+  padding: 22px 20px;
+  min-height: 186px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.workspace .stat-card > .flex-between {
+  align-items: flex-start;
+  min-height: 38px;
+}
+.workspace .stat-card > .flex-between > span:first-child {
+  font-size: 13px;
+  line-height: 1.45;
+  max-width: none;
+}
+.workspace .stat-card strong {
+  font-size: clamp(25px, 2.1vw, 32px);
+  letter-spacing: -1.1px;
+  margin: 12px 0;
+}
+.workspace .stat-main strong {
+  font-size: clamp(30px, 2.5vw, 38px);
+}
+.workspace .stat-card strong > span {
+  display: inline;
+  font-size: 10px;
+}
+.workspace .stat-card > small,
+.workspace .stat-card > a {
+  font-size: 12px;
+  line-height: 1.55;
+  margin-top: auto;
+}
+.workspace .stat-card > a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.workspace .stat-card > a svg {
+  flex-shrink: 0;
+}
+.workspace .stat-main > .flex-between > span:first-child,
+.workspace .stat-main > small {
+  color: #fff;
+}
+.workspace .stat-main .tiny-dot {
+  display: none;
+}
+.workspace .panel {
+  border-radius: 16px;
+  box-shadow: none;
+}
+.workspace .panel-heading {
+  padding: 24px;
+  align-items: flex-start;
+}
+.workspace .panel-heading h2 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.workspace .panel-heading p,
+.workspace .panel-heading .text-link {
+  font-size: 12px;
+  color: var(--muted);
+}
+.workspace .panel-heading .text-link {
+  min-height: 32px;
+}
+.workspace .dashboard-middle,
+.workspace .dashboard-bottom {
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 24px;
+}
+.workspace .collection-body {
+  padding: 8px 24px 28px;
+  gap: 24px;
+}
+.workspace .collection-details > .eyebrow {
+  font-size: 10px;
+  color: var(--muted);
+}
+.workspace .collection-details > strong {
+  font-size: clamp(30px, 2.8vw, 40px);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.workspace .collection-details > p,
+.workspace .collection-details .text-link {
+  font-size: 13px;
+}
+.workspace .chart-legend {
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  max-width: 280px;
+  font-size: 11px;
+  margin: 22px 0;
+}
+.workspace .chart-legend i {
+  width: 8px;
+  height: 8px;
+}
+.workspace .donut {
+  background: conic-gradient(
+    var(--chart-verified) 0 var(--verified),
+    var(--amber) var(--verified) var(--reported),
+    var(--chart-due) 0
+  );
+  width: 160px;
+  height: 160px;
+}
+.workspace .donut > div {
+  width: 136px;
+  height: 136px;
+}
+.workspace .donut small {
+  font-size: 10px;
+}
+.workspace .legend-verified {
+  background: var(--chart-verified);
+}
+.workspace .legend-due {
+  background: var(--chart-due);
+}
+.workspace .collection-foot {
+  padding: 16px 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 11px;
+}
+.workspace .next-action-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  padding: 24px;
+}
+.workspace .next-action-card .eyebrow {
+  font-size: 10px;
+  line-height: 1.6;
+}
+.workspace .next-action-card h2 {
+  font-size: 27px;
+  line-height: 1.2;
+}
+.workspace .next-action-card > p {
+  font-size: 13px;
+}
+.workspace .next-recipient b {
+  font-size: 14px;
+}
+.workspace .next-recipient small,
+.workspace .next-action-status,
+.workspace .next-action-status .status {
+  font-size: 11px;
+}
+.workspace .next-action-status {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.workspace .next-action-card .button {
+  font-size: 13px;
+  min-height: 44px;
+  margin-top: auto;
+}
+.workspace table {
+  font-size: 13px;
+}
+.workspace th,
+.workspace .reference,
+.workspace .member-cell small {
+  font-size: 11px;
+}
+.workspace th {
+  padding: 13px 20px;
+}
+.workspace td {
+  padding: 16px 20px;
+}
+.workspace td b {
+  font-size: 13px;
+}
+.workspace .status {
+  font-size: 11px;
+}
+.workspace .recent-contributions table {
+  table-layout: fixed;
+  white-space: normal;
+}
+.workspace .recent-contributions th:last-child {
+  width: 38%;
+  text-align: right;
+}
+.workspace .recent-contributions .member-cell > div {
+  min-width: 0;
+}
+.workspace .recent-payment {
+  text-align: right;
+}
+.workspace .recent-payment .amount {
+  display: block;
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+.workspace .activity-panel .activity-list {
+  display: block;
+  padding: 0 24px;
+}
+.workspace .activity-item {
+  padding-bottom: 26px;
+}
+.workspace .activity-item b {
+  font-size: 13px;
+}
+.workspace .activity-item p,
+.workspace .activity-item small,
+.workspace .share-action small {
+  font-size: 11px;
+}
+.workspace .share-action {
+  padding: 18px 24px;
+}
+.workspace .share-action b {
+  font-size: 13px;
+}
+.workspace .workspace-footer {
+  font-size: 10px;
+}
+.marketing .hero-copy > p {
+  font-size: 16px;
+  max-width: 470px;
+}
+.marketing .nav-links {
+  font-size: 14px;
+}
+.marketing .marketing-nav .button,
+.marketing .hero-buttons .text-link {
+  font-size: 13px;
+  min-height: 44px;
+}
+
+@media (max-width: 1250px) {
+  .workspace .dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .workspace .dashboard-middle,
+  .workspace .dashboard-bottom {
+    grid-template-columns: 1fr;
+  }
+  .workspace .next-action-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px 28px;
+    align-items: center;
+  }
+  .workspace .next-action-card > .flex-between,
+  .workspace .next-action-card > h2,
+  .workspace .next-action-card > p {
+    grid-column: 1;
+    margin: 0;
+  }
+  .workspace .next-recipient {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+  .workspace .next-action-status {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+  }
+  .workspace .next-action-card .button {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+@media (max-width: 760px) {
+  .workspace .workspace-main {
+    padding: 28px 20px;
+  }
+  .workspace .page-heading {
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .workspace .page-heading > div:first-child {
+    flex-basis: 100%;
+  }
+  .workspace .page-heading h1 {
+    font-size: 30px;
+    text-wrap: initial;
+  }
+  .workspace .page-heading .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.9px;
+  }
+  .workspace .page-heading p {
+    font-size: 13px;
+  }
+  .workspace .page-heading-actions {
+    gap: 8px;
+    width: 100%;
+  }
+  .workspace .page-heading-actions .button,
+  .workspace .period-pill {
+    font-size: 12px;
+  }
+  .workspace .workspace-header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .workspace .actor-select select {
+    font-size: 10px;
+  }
+  .workspace .actor-select > span {
+    font-size: 9px;
+  }
+  .workspace .header-actions > .avatar {
+    display: none;
+  }
+  .workspace .demo-banner,
+  .workspace .demo-banner a {
+    font-size: 10px;
+  }
+  .workspace .dashboard-stats {
+    gap: 12px;
+  }
+  .workspace .stat-card {
+    padding: 18px 16px;
+    min-height: 172px;
+  }
+  .workspace .dashboard-stats .stat-main {
+    grid-column: 1 / -1;
+    min-height: 180px;
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+    box-shadow: none;
+  }
+  .workspace .stat-card > .flex-between > span:first-child {
+    font-size: 12px;
+  }
+  .workspace .stat-card strong {
+    font-size: clamp(18px, 5.7vw, 28px);
+    letter-spacing: -0.8px;
+  }
+  .workspace .stat-main strong {
+    font-size: clamp(32px, 10vw, 40px);
+    letter-spacing: -1.5px;
+  }
+  .workspace .stat-card > small,
+  .workspace .stat-card > a {
+    font-size: 11px;
+  }
+  .workspace .stat-card .stat-icon {
+    display: none;
+  }
+  .workspace .dashboard-stats > .stat-card:last-child {
+    grid-column: 1 / -1;
+    min-height: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+  }
+  .workspace .dashboard-stats > .stat-card:last-child > .flex-between {
+    flex: 1 1 120px;
+    min-height: 0;
+  }
+  .workspace .dashboard-stats > .stat-card:last-child > strong {
+    font-size: 26px;
+    margin: 0;
+  }
+  .workspace .dashboard-stats > .stat-card:last-child > small {
+    flex-basis: 100%;
+  }
+  .workspace .dashboard-middle,
+  .workspace .dashboard-bottom {
+    gap: 20px;
+  }
+  .workspace .next-action-card {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    padding: 22px;
+  }
+  .workspace .next-action-card h2 {
+    margin: 14px 0 8px;
+    font-size: 26px;
+  }
+  .workspace .next-recipient {
+    margin: 20px 0 16px;
+  }
+  .workspace .next-action-status {
+    margin-bottom: 18px;
+  }
+  .workspace .panel-heading {
+    padding: 22px 20px;
+    flex-wrap: wrap;
+  }
+  .workspace .collection-body {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 20px 24px;
+    gap: 24px 16px;
+  }
+  .workspace .collection-details {
+    flex: auto;
+  }
+  .workspace .collection-details > strong {
+    font-size: 30px;
+  }
+  .workspace .donut {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: none;
+    transform: none;
+    border-radius: 0;
+  }
+  .workspace .donut::before {
+    content: "";
+    display: block;
+    height: 12px;
+    border-radius: 100px;
+    background: linear-gradient(
+      to right,
+      var(--chart-verified) 0 var(--verified),
+      var(--amber) var(--verified) var(--reported),
+      var(--chart-due) 0
+    );
+  }
+  .workspace .donut > div {
+    width: auto;
+    height: auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 6px;
+    margin-top: 10px;
+    background: none;
+    transform: none;
+  }
+  .workspace .donut strong,
+  .workspace .donut strong span {
+    font-size: 14px;
+    letter-spacing: 0;
+  }
+  .workspace .donut small {
+    font-size: 12px;
+  }
+  .workspace .collection-foot {
+    padding: 14px 20px;
+  }
+  .workspace .recent-contributions th,
+  .workspace .recent-contributions td {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .workspace .recent-contributions .member-cell .avatar {
+    display: none;
+  }
+  .workspace .recent-contributions .member-cell small {
+    font-size: 10px;
+  }
+  .workspace .recent-contributions .status {
+    white-space: nowrap;
+  }
+  .workspace .mobile-nav {
+    border-radius: 22px;
+  }
+  .workspace .mobile-nav > a,
+  .workspace .mobile-nav > button {
+    font-size: 10px;
+    min-width: 0;
+    flex: 1;
+    gap: 6px;
+  }
+  .workspace .mobile-nav svg {
+    width: 20px;
+  }
+  .marketing .hero-copy > p {
+    font-size: 15px;
+  }
+  .marketing .marketing-nav .button {
+    font-size: 11px;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .workspace {
+    --chart-verified: #a9c9f1;
+    --chart-due: #465b7d;
+  }
+  .workspace .dashboard-stats .stat-main {
+    background: #304b7d;
+    border-color: #6b87ae;
+  }
+}

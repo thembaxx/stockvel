@@ -1,4 +1,5 @@
 "use client";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import {
   ArrowUpRightIcon,
@@ -25,9 +26,9 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
   return (
     <>
       <PageHeading
-        eyebrow="YOUR COMMUNITY, AT A GLANCE"
+        eyebrow={`${state.name} · OVERVIEW`}
         title={`A good day to grow together, ${actor.name.split(" ")[0]}.`}
-        description={`Here’s where ${state.name} stands today.`}
+        description="Your contributions, records and next shared decision in one place."
       >
         <PeriodPill />
         <button className="button button-primary button-small" onClick={onRecord}>
@@ -40,12 +41,9 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
             <span>Verified available funds</span>
             <ShieldCheckIcon size={22} weight="light" />
           </div>
-          <strong>
-            {formatZar(sums.funds)}
-            <span>ZAR</span>
-          </strong>
+          <strong>{formatZar(sums.funds)}</strong>
           <small>
-            <span className="tiny-dot" /> Reconciled records in your society’s bank account
+            <span className="tiny-dot" /> Recorded in your society’s bank account
           </small>
         </article>
         <article className="stat-card">
@@ -95,7 +93,7 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
       <div className="dashboard-middle">
         <section className="panel collection-panel">
           <PanelHeading
-            title="A little closer, together."
+            title="Monthly contributions"
             description="October contributions · Only verified payments count"
           />
           <div className="collection-body">
@@ -125,9 +123,12 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
               className="donut"
               role="img"
               aria-label={`${percent}% of monthly obligations verified`}
-              style={{
-                background: `conic-gradient(#293b70 0 ${percent}%, #e7aa55 ${percent}% ${Number(((sums.verified + sums.pending) * 100n) / sums.target)}%, #e8eef7 0)`,
-              }}
+              style={
+                {
+                  "--verified": `${percent}%`,
+                  "--reported": `${Number(((sums.verified + sums.pending) * 100n) / sums.target)}%`,
+                } as CSSProperties
+              }
             >
               <div>
                 <strong>
@@ -152,7 +153,7 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
             <ArrowUpRightIcon size={20} />
           </div>
           <h2>
-            {state.type === "rotating" ? "Everyone has a turn." : "Care, with a clear process."}
+            {state.type === "rotating" ? "Next payout to review" : "Benefit request to review"}
           </h2>
           <p>
             {state.type === "rotating"
@@ -192,7 +193,7 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
         </section>
       </div>
       <div className="dashboard-bottom">
-        <section className="panel">
+        <section className="panel recent-contributions">
           <PanelHeading
             title="Recent contributions"
             description="A clear view of what’s reported and what’s verified"
@@ -203,9 +204,7 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
               <thead>
                 <tr>
                   <th>Member</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Reference</th>
+                  <th>Payment</th>
                 </tr>
               </thead>
               <tbody>
@@ -230,15 +229,14 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
                             </span>
                             <div>
                               <b>{m.name}</b>
-                              <small>October contribution</small>
+                              <small>{p.reference} · October</small>
                             </div>
                           </div>
                         </td>
-                        <td className="amount">{formatZar(p.amount)}</td>
-                        <td>
+                        <td className="recent-payment">
+                          <span className="amount">{formatZar(p.amount)}</span>
                           <Status value={p.status} />
                         </td>
-                        <td className="muted reference">{p.reference}</td>
                       </tr>
                     );
                   })}
@@ -247,7 +245,7 @@ export function Overview({ onRecord, onShare }: { onRecord: () => void; onShare:
           </div>
         </section>
         <section className="panel activity-panel">
-          <PanelHeading title="The latest, recorded." href="/demo/approvals" label="Audit trail" />
+          <PanelHeading title="Recent activity" href="/demo/approvals" label="Audit trail" />
           <div className="activity-list">
             {state.audit.slice(0, 3).map((a, i) => (
               <div className="activity-item" key={a.id}>

@@ -5,6 +5,7 @@ import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import "@fontsource/instrument-serif/400-italic.css";
 import "./globals.css";
+import "./interface.css";
 import { PwaSupport } from "@/components/pwa-support";
 import { MotionProvider } from "@/components/motion";
 import { isIndexable, resolveSiteUrl, site } from "@/lib/site";
