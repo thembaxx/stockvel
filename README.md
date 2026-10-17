@@ -1,5 +1,23 @@
 # StokvelOS
 
+A South African stokvel and burial-society administration prototype with financial test cases and a PostgreSQL foundation.
+
+[Browse the source](https://github.com/thembaxx/stockvel)
+
+## Engineering highlights
+
+Initial Neon session integration, financial-domain tests and a fictional in-memory demo. Live onboarding, invitations and financial APIs remain incomplete; no money is held or transferred.
+
+## Technology
+
+Declared in [package.json](package.json): Next.js `^16.4.0` · React `^19.3.0` · TypeScript `^7.0.2` · Tailwind CSS `^4.1.0` · Motion `^14.2.0` · Drizzle ORM `^0.45.4` · Neon Auth `0.6.0-beta` · Zod `^4.6.7`.
+
+**Quality tooling:** `lint`, `typecheck`, `test`, `test:e2e`, `check` scripts are available. See the setup guide below for prerequisites; this documentation pass does not assert that those checks were run.
+
+---
+
+## Project guide
+
 A mobile-first administration platform for South African rotating stokvels and burial societies. This repository delivers the blueprint’s **first milestone: a clickable prototype, financial test cases and a PostgreSQL financial foundation**.
 
 **Status:** reviewable prototype, tested financial foundation, and initial Neon Auth integration. The \`/auth/sign-in\` and \`/workspace\` routes use server-verified Neon sessions; the public \`/demo\` app still uses fictional records in browser memory. Live society persistence, invitations, production onboarding and financial APIs are not enabled. No money is held or transferred.
