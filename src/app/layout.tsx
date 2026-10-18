@@ -9,6 +9,7 @@ import "./interface.css";
 import { PwaSupport } from "@/components/pwa-support";
 import { MotionProvider } from "@/components/motion";
 import { isIndexable, resolveSiteUrl, site } from "@/lib/site";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(resolveSiteUrl()),
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MotionProvider>
           <PwaSupport>{children}</PwaSupport>
         </MotionProvider>
+        <Analytics />
       </body>
     </html>
   );
