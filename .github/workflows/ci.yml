@@ -2,6 +2,9 @@ name: Quality gates
 on:
   push:
   pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '11 6 * * 1'
 permissions:
   contents: read
 concurrency:
