@@ -41,7 +41,7 @@
     "@types/react-dom": "^19.0.0",
     "drizzle-kit": "^0.31.11",
     "oxfmt": "^0.73.0",
-    "oxlint": "^1.0.0",
+    "oxlint": "^1.88.0",
     "tailwindcss": "^4.1.0",
     "typescript": "^7.0.2",
     "vitest": "^5.0.4"
