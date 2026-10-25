@@ -12,8 +12,9 @@
     "test:e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "node --env-file=.env.local scripts/migrate.mjs",
-    "check": "pnpm typecheck && pnpm test && pnpm build",
-    "start": "next start"
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build",
+    "start": "next start",
+    "format:check": "oxfmt --check ."
   },
   "dependencies": {
     "@fontsource/instrument-serif": "^5.3.0",
