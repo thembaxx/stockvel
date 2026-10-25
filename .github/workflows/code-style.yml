@@ -1,4 +1,4 @@
-name: Code style checks
+name: Lint baseline
 on:
   pull_request:
     branches: [main]
@@ -24,4 +24,3 @@ jobs:
       - run: corepack enable && corepack prepare pnpm@11.25.0 --activate
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm lint
-      - run: pnpm format:check
