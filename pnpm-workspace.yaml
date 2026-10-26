@@ -1,3 +1,4 @@
 ignoreScripts: true
 overrides:
   '@esbuild-kit/core-utils>esbuild': 0.25.12
+  zod: 4.6.7
