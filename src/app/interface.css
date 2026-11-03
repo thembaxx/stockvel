@@ -570,3 +570,15 @@
     border-color: #6b87ae;
   }
 }
+/* Keep the compact desktop scale without iOS focus zoom on touch controls. */
+@media (pointer: coarse) {
+  .workspace .actor-select select,
+  .society-switch select,
+  .search-field input,
+  .form-stack input:not([type="checkbox"]),
+  .form-stack select,
+  .form-stack textarea,
+  .mobile-more select {
+    font-size: 16px;
+  }
+}
