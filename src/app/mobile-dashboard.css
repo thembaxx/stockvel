@@ -1,0 +1,56 @@
+/* Stokvel financial workspace: readable mobile ledgers and reachable actions.
+   Financial data, role permissions and contribution calculations are unchanged. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+.workspace :is(.workspace-main, .panel, .stat-card, .activity-panel, .collection-body) {
+  min-width: 0;
+}
+.workspace :is(.panel-heading, .collection-foot, .activity-item, .member-cell) {
+  overflow-wrap: anywhere;
+}
+.workspace .recent-contributions {
+  font-variant-numeric: tabular-nums;
+  max-width: 100%;
+}
+.workspace .recent-contributions :is(th, td) {
+  line-height: 1.45;
+}
+.workspace :is(.page-heading-actions .button, .panel-heading .text-link, .table-action, .mobile-nav > a, .mobile-nav > button) {
+  min-height: 44px;
+}
+@media (pointer: coarse), (max-width: 767px) {
+  :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea) {
+    font-size: 16px !important;
+  }
+}
+@media (max-width: 700px) {
+  .workspace .workspace-main {
+    padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
+  }
+  .workspace .page-heading p,
+  .workspace .panel-heading p {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .workspace .stat-card > small,
+  .workspace .stat-card > a,
+  .workspace .recent-contributions .member-cell small {
+    font-size: 12px;
+  }
+  .workspace .mobile-nav > a,
+  .workspace .mobile-nav > button {
+    font-size: 11px;
+  }
+  .workspace .collection-details > strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workspace .mobile-nav :is(a, button) {
+    transition: none;
+  }
+}
